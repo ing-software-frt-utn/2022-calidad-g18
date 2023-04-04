@@ -1,0 +1,85 @@
+﻿@model CapaPresentacionAdmin.Models.OrdenProduccion
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutLinea.cshtml";
+}
+
+<h2 class="text-center" style="margin-top: 50px">Crear Orden de Produccion</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumeroOP, "Numero De OP", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumeroOP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumeroOP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumeroLinea, "Numero de Linea", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NumeroLinea", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NumeroLinea, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdModelo, "Modelo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.IdModelo, (IEnumerable<SelectListItem>)ViewBag.Modelos, "Seleccione un modelo", new { @class = "form-control", id = "ddlModelo" })
+                @Html.ValidationMessageFor(model => model.IdModelo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Codigo, "Color", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Codigo, (IEnumerable<SelectListItem>)ViewBag.Colores, "Seleccione un modelo primero", new { @class = "form-control", id = "ddlColor" })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" style="margin-top: 15px">
+                <input type="submit" value="Crear" class="btn btn-success" />
+                <a class="btn btn-danger" href="http://localhost:57070/OrdenesProduccion/Index">Volver</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#ddlModelo").change(function () {
+                var modeloId = $(this).val();
+                if (modeloId) {
+                    $.ajax({
+                        url: "@Url.Action("GetColoresByModelo", "OrdenesProduccion")" + "?idModelo=" + modeloId,
+                        type: "GET",
+                        success: function (data) {
+                            $("#ddlColor").empty();
+                            $("#ddlColor").append('<option value="">Seleccione un color</option>');
+                            $.each(data, function (index, color) {
+                                $("#ddlColor").append('<option value="' + color.Codigo + '">' + color.Descripcion + '</option>');
+                            });
+                        }
+                    });
+                }
+                else {
+                    $("#ddlColor").empty();
+                    $("#ddlColor").append('<option value="">Seleccione un modelo primero</option>');
+                }
+            });
+        });
+
+    </script>
+}
+

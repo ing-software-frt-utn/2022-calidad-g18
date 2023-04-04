@@ -1,0 +1,78 @@
+﻿@model CapaPresentacionAdmin.Models.Modelo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="card-header">
+    <i class="fas fa-paint-brush me-1"></i>
+    Detalle Modelo
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SKU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SKU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Denominacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Denominacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteInferiorR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteInferiorR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteSuperiorR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteInferiorO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteInferiorO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteSuperiorO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdModelo }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

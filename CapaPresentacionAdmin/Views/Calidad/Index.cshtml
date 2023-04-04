@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCalidad.cshtml";
+}
+
+<h1>Bienvenido</h1>
+<h4>Que accion deseas realizar?</h4>
+
+<div class="form-group">
+    <br />
+    <br />
+    @if (ViewBag.OpAsociada)
+    {
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-primary btn-lg btn-blocks" href="http://localhost:57070/Calidad/Inspeccionar"><i class="fas fa-search-plus"></i> Inspeccionar Calzado</a>
+        </div>
+        <br />
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-success btn-lg btn-blocks disabled" href="http://localhost:57070/Calidad/AsociarOP"><i class="fas fa-link"></i> Asociarme a una OP</a>
+            <br />
+            <span style="color: red; margin-left: 10px;">Solo puedes asociarte a una OP, si deseas asociarte a otra OP por favor abandona la actual.</span>
+        </div>
+        <br />
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-danger btn-lg btn-blocks" href="#" id="abandonarOp"><i class="fa fa-door-open"></i> Abandonar una OP</a>
+        </div>
+    }
+    else
+    {
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-primary btn-lg btn-blocks disabled" href="http://localhost:57070/Calidad/Inspeccionar"><i class="fas fa-search-plus"></i> Inspeccionar Calzado</a>
+        </div>
+        <br />
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-success btn-lg btn-blocks" href="http://localhost:57070/Calidad/AsociarOP"><i class="fas fa-link"></i> Asociarme a una OP</a>
+        </div>
+        <br />
+        <div style="margin-top: 10px" class="text-center">
+            <a class="btn btn-outline-danger btn-lg btn-blocks" href="#" id="abandonarOp"><i class="fa fa-door-open"></i> Abandonar una OP</a>
+            <br />
+            <span style="color: red; margin-left: 10px;">No estas asociado a ninguna OP.</span>
+        </div>
+    }
+    <br />
+    <br />
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $("#abandonarOp").on("click", function (e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que desea abandonar la orden de producción?")) {
+                    $.post('@Url.Action("AbandonarOP", "Calidad")', function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

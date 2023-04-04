@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CapaPresentacionAdmin.Models.ModeloColor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center" style="margin-top: 50px">Modelo Colores</h2>
+
+ <div class="row">
+         <hr />
+         <div class="col-12">
+         <a class="btn btn-success" href="http://localhost:57070/ModeloColores/Create">Crear nuevo</a>
+         </div>
+ </div>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelo.SKU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo.SKU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+               
+
+                @Html.ActionLink("Editar", "Edit", "ModeloColores", new { Id = item.IdModeloColor },
+       new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+                @Html.ActionLink("Detalles", "Details", "ModeloColores", new { Id = item.IdModeloColor },
+                new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+                @Html.ActionLink("Eliminar", "Delete", "ModeloColores", new { Id = item.IdModeloColor },
+                new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,47 @@
+﻿@model CapaPresentacionAdmin.Models.ModeloColor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="card-header">
+    <i class="fas fa-paint-brush me-1"></i>
+    Detalle Color del Modelo
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo.SKU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo.SKU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Color.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdModeloColor }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

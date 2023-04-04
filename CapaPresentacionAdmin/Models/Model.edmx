@@ -1,0 +1,918 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FabricaCalzadosDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alerta">
+          <Key>
+            <PropertyRef Name="IdAlerta" />
+          </Key>
+          <Property Name="IdAlerta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TotalDefectosUltHora" Type="int" Nullable="false" />
+          <Property Name="TotalDefectosUltReinicio" Type="int" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdModelo" Type="int" Nullable="false" />
+          <Property Name="IdDefecto" Type="int" Nullable="false" />
+          <Property Name="Mensaje" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Defecto">
+          <Key>
+            <PropertyRef Name="IdDefecto" />
+          </Key>
+          <Property Name="IdDefecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoDefecto" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pie" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+          <Property Name="IdModelo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="int" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoEmpleado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="JornadaLaboral">
+          <Key>
+            <PropertyRef Name="IdJornadaLaboral" />
+          </Key>
+          <Property Name="IdJornadaLaboral" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTurno" Type="int" />
+          <Property Name="HoraInicio" Type="datetime" />
+          <Property Name="HoraFin" Type="datetime" />
+          <Property Name="TotalPrimera" Type="int" />
+          <Property Name="TotalSegunda" Type="int" />
+          <Property Name="TotalHermanado" Type="int" />
+        </EntityType>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="NumeroLinea" />
+          </Key>
+          <Property Name="NumeroLinea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="IdModelo" />
+          </Key>
+          <Property Name="IdModelo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SKU" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Denominacion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LimiteInferiorR" Type="int" Nullable="false" />
+          <Property Name="LimiteSuperiorR" Type="int" Nullable="false" />
+          <Property Name="LimiteInferiorO" Type="int" Nullable="false" />
+          <Property Name="LimiteSuperiorO" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ModeloColor">
+          <Key>
+            <PropertyRef Name="IdModeloColor" />
+          </Key>
+          <Property Name="IdModeloColor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdModelo" Type="int" />
+          <Property Name="Codigo" Type="int" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrdenProduccion">
+          <Key>
+            <PropertyRef Name="NumeroOP" />
+          </Key>
+          <Property Name="NumeroOP" Type="int" Nullable="false" />
+          <Property Name="NumeroLinea" Type="int" />
+          <Property Name="IdModelo" Type="int" />
+          <Property Name="Codigo" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdJornadaLaboral" Type="int" />
+          <Property Name="SupervisorLinea" Type="int" />
+          <Property Name="SupervisorCalidad" Type="int" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Registro">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroOP" Type="int" />
+          <Property Name="IdJornadaLaboral" Type="int" />
+          <Property Name="TotalPrimera" Type="int" />
+          <Property Name="TotalSegunda" Type="int" />
+          <Property Name="TotalHermanado" Type="int" />
+          <Property Name="TotalDefectosR" Type="int" />
+          <Property Name="TotalDefectosO" Type="int" />
+        </EntityType>
+        <EntityType Name="Turno">
+          <Key>
+            <PropertyRef Name="IdTurno" />
+          </Key>
+          <Property Name="IdTurno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoraInicio" Type="time" Precision="7" />
+          <Property Name="HoraFin" Type="time" Precision="7" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Alerta__IdDefect__5FB337D6">
+          <End Role="Defecto" Type="Self.Defecto" Multiplicity="1" />
+          <End Role="Alerta" Type="Self.Alerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Defecto">
+              <PropertyRef Name="IdDefecto" />
+            </Principal>
+            <Dependent Role="Alerta">
+              <PropertyRef Name="IdDefecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alerta__IdModelo__5EBF139D">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
+          <End Role="Alerta" Type="Self.Alerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Alerta">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Defecto__IdModel__5BE2A6F2">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
+          <End Role="Defecto" Type="Self.Defecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Defecto">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JornadaLa__IdTur__4BAC3F29">
+          <End Role="Turno" Type="Self.Turno" Multiplicity="0..1" />
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="IdTurno" />
+            </Principal>
+            <Dependent Role="JornadaLaboral">
+              <PropertyRef Name="IdTurno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ModeloCol__Codig__4316F928">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="ModeloColor" Type="Self.ModeloColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="ModeloColor">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ModeloCol__IdMod__4222D4EF">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="ModeloColor" Type="Self.ModeloColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="ModeloColor">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Codig__5165187F">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdJor__534D60F1">
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JornadaLaboral">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdMod__5070F446">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Numer__4F7CD00D">
+          <End Role="Linea" Type="Self.Linea" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Linea">
+              <PropertyRef Name="NumeroLinea" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="NumeroLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Super__5441852A">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="SupervisorLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Super__5535A963">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="SupervisorCalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registro__IdJorn__6477ECF3">
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JornadaLaboral">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registro__Numero__6383C8BA">
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenProduccion">
+              <PropertyRef Name="NumeroOP" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="NumeroOP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FabricaCalzadosDBModelStoreContainer">
+          <EntitySet Name="Alerta" EntityType="Self.Alerta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Defecto" EntityType="Self.Defecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JornadaLaboral" EntityType="Self.JornadaLaboral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Linea" EntityType="Self.Linea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModeloColor" EntityType="Self.ModeloColor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenProduccion" EntityType="Self.OrdenProduccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registro" EntityType="Self.Registro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Alerta__IdDefect__5FB337D6" Association="Self.FK__Alerta__IdDefect__5FB337D6">
+            <End Role="Defecto" EntitySet="Defecto" />
+            <End Role="Alerta" EntitySet="Alerta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alerta__IdModelo__5EBF139D" Association="Self.FK__Alerta__IdModelo__5EBF139D">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Alerta" EntitySet="Alerta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Defecto__IdModel__5BE2A6F2" Association="Self.FK__Defecto__IdModel__5BE2A6F2">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Defecto" EntitySet="Defecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JornadaLa__IdTur__4BAC3F29" Association="Self.FK__JornadaLa__IdTur__4BAC3F29">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ModeloCol__Codig__4316F928" Association="Self.FK__ModeloCol__Codig__4316F928">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="ModeloColor" EntitySet="ModeloColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ModeloCol__IdMod__4222D4EF" Association="Self.FK__ModeloCol__IdMod__4222D4EF">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="ModeloColor" EntitySet="ModeloColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Codig__5165187F" Association="Self.FK__OrdenProd__Codig__5165187F">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdJor__534D60F1" Association="Self.FK__OrdenProd__IdJor__534D60F1">
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdMod__5070F446" Association="Self.FK__OrdenProd__IdMod__5070F446">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Numer__4F7CD00D" Association="Self.FK__OrdenProd__Numer__4F7CD00D">
+            <End Role="Linea" EntitySet="Linea" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Super__5441852A" Association="Self.FK__OrdenProd__Super__5441852A">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Super__5535A963" Association="Self.FK__OrdenProd__Super__5535A963">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registro__IdJorn__6477ECF3" Association="Self.FK__Registro__IdJorn__6477ECF3">
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registro__Numero__6383C8BA" Association="Self.FK__Registro__Numero__6383C8BA">
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FabricaCalzadosDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alerta">
+          <Key>
+            <PropertyRef Name="IdAlerta" />
+          </Key>
+          <Property Name="IdAlerta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalDefectosUltHora" Type="Int32" Nullable="false" />
+          <Property Name="TotalDefectosUltReinicio" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdModelo" Type="Int32" Nullable="false" />
+          <Property Name="IdDefecto" Type="Int32" Nullable="false" />
+          <Property Name="Mensaje" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Defecto" Relationship="Self.FK__Alerta__IdDefect__5FB337D6" FromRole="Alerta" ToRole="Defecto" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__Alerta__IdModelo__5EBF139D" FromRole="Alerta" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ModeloColor" Relationship="Self.FK__ModeloCol__Codig__4316F928" FromRole="Color" ToRole="ModeloColor" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__OrdenProd__Codig__5165187F" FromRole="Color" ToRole="OrdenProduccion" />
+        </EntityType>
+        <EntityType Name="Defecto">
+          <Key>
+            <PropertyRef Name="IdDefecto" />
+          </Key>
+          <Property Name="IdDefecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoDefecto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="IdModelo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Alerta" Relationship="Self.FK__Alerta__IdDefect__5FB337D6" FromRole="Defecto" ToRole="Alerta" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__Defecto__IdModel__5BE2A6F2" FromRole="Defecto" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="Int32" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Clave" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TipoEmpleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__OrdenProd__Super__5441852A" FromRole="Empleado" ToRole="OrdenProduccion" />
+          <NavigationProperty Name="OrdenProduccion1" Relationship="Self.FK__OrdenProd__Super__5535A963" FromRole="Empleado" ToRole="OrdenProduccion" />
+        </EntityType>
+        <EntityType Name="JornadaLaboral">
+          <Key>
+            <PropertyRef Name="IdJornadaLaboral" />
+          </Key>
+          <Property Name="IdJornadaLaboral" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTurno" Type="Int32" />
+          <Property Name="HoraInicio" Type="DateTime" Precision="3" />
+          <Property Name="HoraFin" Type="DateTime" Precision="3" />
+          <Property Name="TotalPrimera" Type="Int32" />
+          <Property Name="TotalSegunda" Type="Int32" />
+          <Property Name="TotalHermanado" Type="Int32" />
+          <NavigationProperty Name="Turno" Relationship="Self.FK__JornadaLa__IdTur__4BAC3F29" FromRole="JornadaLaboral" ToRole="Turno" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__OrdenProd__IdJor__534D60F1" FromRole="JornadaLaboral" ToRole="OrdenProduccion" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK__Registro__IdJorn__6477ECF3" FromRole="JornadaLaboral" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="NumeroLinea" />
+          </Key>
+          <Property Name="NumeroLinea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__OrdenProd__Numer__4F7CD00D" FromRole="Linea" ToRole="OrdenProduccion" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="IdModelo" />
+          </Key>
+          <Property Name="IdModelo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SKU" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Denominacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LimiteInferiorR" Type="Int32" Nullable="false" />
+          <Property Name="LimiteSuperiorR" Type="Int32" Nullable="false" />
+          <Property Name="LimiteInferiorO" Type="Int32" Nullable="false" />
+          <Property Name="LimiteSuperiorO" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alerta" Relationship="Self.FK__Alerta__IdModelo__5EBF139D" FromRole="Modelo" ToRole="Alerta" />
+          <NavigationProperty Name="Defecto" Relationship="Self.FK__Defecto__IdModel__5BE2A6F2" FromRole="Modelo" ToRole="Defecto" />
+          <NavigationProperty Name="ModeloColor" Relationship="Self.FK__ModeloCol__IdMod__4222D4EF" FromRole="Modelo" ToRole="ModeloColor" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__OrdenProd__IdMod__5070F446" FromRole="Modelo" ToRole="OrdenProduccion" />
+        </EntityType>
+        <EntityType Name="ModeloColor">
+          <Key>
+            <PropertyRef Name="IdModeloColor" />
+          </Key>
+          <Property Name="IdModeloColor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdModelo" Type="Int32" />
+          <Property Name="Codigo" Type="Int32" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Color" Relationship="Self.FK__ModeloCol__Codig__4316F928" FromRole="ModeloColor" ToRole="Color" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__ModeloCol__IdMod__4222D4EF" FromRole="ModeloColor" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="OrdenProduccion">
+          <Key>
+            <PropertyRef Name="NumeroOP" />
+          </Key>
+          <Property Name="NumeroOP" Type="Int32" Nullable="false" />
+          <Property Name="NumeroLinea" Type="Int32" />
+          <Property Name="IdModelo" Type="Int32" />
+          <Property Name="Codigo" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdJornadaLaboral" Type="Int32" />
+          <Property Name="SupervisorLinea" Type="Int32" />
+          <Property Name="SupervisorCalidad" Type="Int32" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Color" Relationship="Self.FK__OrdenProd__Codig__5165187F" FromRole="OrdenProduccion" ToRole="Color" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK__OrdenProd__Super__5441852A" FromRole="OrdenProduccion" ToRole="Empleado" />
+          <NavigationProperty Name="Empleado1" Relationship="Self.FK__OrdenProd__Super__5535A963" FromRole="OrdenProduccion" ToRole="Empleado" />
+          <NavigationProperty Name="JornadaLaboral" Relationship="Self.FK__OrdenProd__IdJor__534D60F1" FromRole="OrdenProduccion" ToRole="JornadaLaboral" />
+          <NavigationProperty Name="Linea" Relationship="Self.FK__OrdenProd__Numer__4F7CD00D" FromRole="OrdenProduccion" ToRole="Linea" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__OrdenProd__IdMod__5070F446" FromRole="OrdenProduccion" ToRole="Modelo" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK__Registro__Numero__6383C8BA" FromRole="OrdenProduccion" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="Registro">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroOP" Type="Int32" />
+          <Property Name="IdJornadaLaboral" Type="Int32" />
+          <Property Name="TotalPrimera" Type="Int32" />
+          <Property Name="TotalSegunda" Type="Int32" />
+          <Property Name="TotalHermanado" Type="Int32" />
+          <Property Name="TotalDefectosR" Type="Int32" />
+          <Property Name="TotalDefectosO" Type="Int32" />
+          <NavigationProperty Name="JornadaLaboral" Relationship="Self.FK__Registro__IdJorn__6477ECF3" FromRole="Registro" ToRole="JornadaLaboral" />
+          <NavigationProperty Name="OrdenProduccion" Relationship="Self.FK__Registro__Numero__6383C8BA" FromRole="Registro" ToRole="OrdenProduccion" />
+        </EntityType>
+        <EntityType Name="Turno">
+          <Key>
+            <PropertyRef Name="IdTurno" />
+          </Key>
+          <Property Name="IdTurno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoraInicio" Type="Time" Precision="7" />
+          <Property Name="HoraFin" Type="Time" Precision="7" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="JornadaLaboral" Relationship="Self.FK__JornadaLa__IdTur__4BAC3F29" FromRole="Turno" ToRole="JornadaLaboral" />
+        </EntityType>
+        <Association Name="FK__Alerta__IdDefect__5FB337D6">
+          <End Role="Defecto" Type="Self.Defecto" Multiplicity="1" />
+          <End Role="Alerta" Type="Self.Alerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Defecto">
+              <PropertyRef Name="IdDefecto" />
+            </Principal>
+            <Dependent Role="Alerta">
+              <PropertyRef Name="IdDefecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alerta__IdModelo__5EBF139D">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
+          <End Role="Alerta" Type="Self.Alerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Alerta">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ModeloCol__Codig__4316F928">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="ModeloColor" Type="Self.ModeloColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="ModeloColor">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Codig__5165187F">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Defecto__IdModel__5BE2A6F2">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
+          <End Role="Defecto" Type="Self.Defecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Defecto">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Super__5441852A">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="SupervisorLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Super__5535A963">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="SupervisorCalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JornadaLa__IdTur__4BAC3F29">
+          <End Role="Turno" Type="Self.Turno" Multiplicity="0..1" />
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="IdTurno" />
+            </Principal>
+            <Dependent Role="JornadaLaboral">
+              <PropertyRef Name="IdTurno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdJor__534D60F1">
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JornadaLaboral">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registro__IdJorn__6477ECF3">
+          <End Role="JornadaLaboral" Type="Self.JornadaLaboral" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JornadaLaboral">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdJornadaLaboral" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__Numer__4F7CD00D">
+          <End Role="Linea" Type="Self.Linea" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Linea">
+              <PropertyRef Name="NumeroLinea" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="NumeroLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ModeloCol__IdMod__4222D4EF">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="ModeloColor" Type="Self.ModeloColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="ModeloColor">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdMod__5070F446">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="OrdenProduccion">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Registro__Numero__6383C8BA">
+          <End Role="OrdenProduccion" Type="Self.OrdenProduccion" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenProduccion">
+              <PropertyRef Name="NumeroOP" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="NumeroOP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FabricaCalzadosDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alerta" EntityType="Self.Alerta" />
+          <EntitySet Name="Color" EntityType="Self.Color" />
+          <EntitySet Name="Defecto" EntityType="Self.Defecto" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="JornadaLaboral" EntityType="Self.JornadaLaboral" />
+          <EntitySet Name="Linea" EntityType="Self.Linea" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+          <EntitySet Name="ModeloColor" EntityType="Self.ModeloColor" />
+          <EntitySet Name="OrdenProduccion" EntityType="Self.OrdenProduccion" />
+          <EntitySet Name="Registro" EntityType="Self.Registro" />
+          <EntitySet Name="Turno" EntityType="Self.Turno" />
+          <AssociationSet Name="FK__Alerta__IdDefect__5FB337D6" Association="Self.FK__Alerta__IdDefect__5FB337D6">
+            <End Role="Defecto" EntitySet="Defecto" />
+            <End Role="Alerta" EntitySet="Alerta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alerta__IdModelo__5EBF139D" Association="Self.FK__Alerta__IdModelo__5EBF139D">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Alerta" EntitySet="Alerta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ModeloCol__Codig__4316F928" Association="Self.FK__ModeloCol__Codig__4316F928">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="ModeloColor" EntitySet="ModeloColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Codig__5165187F" Association="Self.FK__OrdenProd__Codig__5165187F">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Defecto__IdModel__5BE2A6F2" Association="Self.FK__Defecto__IdModel__5BE2A6F2">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Defecto" EntitySet="Defecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Super__5441852A" Association="Self.FK__OrdenProd__Super__5441852A">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Super__5535A963" Association="Self.FK__OrdenProd__Super__5535A963">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JornadaLa__IdTur__4BAC3F29" Association="Self.FK__JornadaLa__IdTur__4BAC3F29">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdJor__534D60F1" Association="Self.FK__OrdenProd__IdJor__534D60F1">
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registro__IdJorn__6477ECF3" Association="Self.FK__Registro__IdJorn__6477ECF3">
+            <End Role="JornadaLaboral" EntitySet="JornadaLaboral" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__Numer__4F7CD00D" Association="Self.FK__OrdenProd__Numer__4F7CD00D">
+            <End Role="Linea" EntitySet="Linea" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ModeloCol__IdMod__4222D4EF" Association="Self.FK__ModeloCol__IdMod__4222D4EF">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="ModeloColor" EntitySet="ModeloColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdMod__5070F446" Association="Self.FK__OrdenProd__IdMod__5070F446">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Registro__Numero__6383C8BA" Association="Self.FK__Registro__Numero__6383C8BA">
+            <End Role="OrdenProduccion" EntitySet="OrdenProduccion" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FabricaCalzadosDBModelStoreContainer" CdmEntityContainer="FabricaCalzadosDB">
+          <EntitySetMapping Name="Alerta">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Alerta">
+              <MappingFragment StoreEntitySet="Alerta">
+                <ScalarProperty Name="IdAlerta" ColumnName="IdAlerta" />
+                <ScalarProperty Name="TotalDefectosUltHora" ColumnName="TotalDefectosUltHora" />
+                <ScalarProperty Name="TotalDefectosUltReinicio" ColumnName="TotalDefectosUltReinicio" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="IdDefecto" ColumnName="IdDefecto" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Defecto">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Defecto">
+              <MappingFragment StoreEntitySet="Defecto">
+                <ScalarProperty Name="IdDefecto" ColumnName="IdDefecto" />
+                <ScalarProperty Name="TipoDefecto" ColumnName="TipoDefecto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Pie" ColumnName="Pie" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="TipoEmpleado" ColumnName="TipoEmpleado" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JornadaLaboral">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.JornadaLaboral">
+              <MappingFragment StoreEntitySet="JornadaLaboral">
+                <ScalarProperty Name="IdJornadaLaboral" ColumnName="IdJornadaLaboral" />
+                <ScalarProperty Name="IdTurno" ColumnName="IdTurno" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+                <ScalarProperty Name="TotalPrimera" ColumnName="TotalPrimera" />
+                <ScalarProperty Name="TotalSegunda" ColumnName="TotalSegunda" />
+                <ScalarProperty Name="TotalHermanado" ColumnName="TotalHermanado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Linea">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Linea">
+              <MappingFragment StoreEntitySet="Linea">
+                <ScalarProperty Name="NumeroLinea" ColumnName="NumeroLinea" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modelo">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Modelo">
+              <MappingFragment StoreEntitySet="Modelo">
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Denominacion" ColumnName="Denominacion" />
+                <ScalarProperty Name="LimiteInferiorR" ColumnName="LimiteInferiorR" />
+                <ScalarProperty Name="LimiteSuperiorR" ColumnName="LimiteSuperiorR" />
+                <ScalarProperty Name="LimiteInferiorO" ColumnName="LimiteInferiorO" />
+                <ScalarProperty Name="LimiteSuperiorO" ColumnName="LimiteSuperiorO" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModeloColor">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.ModeloColor">
+              <MappingFragment StoreEntitySet="ModeloColor">
+                <ScalarProperty Name="IdModeloColor" ColumnName="IdModeloColor" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenProduccion">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.OrdenProduccion">
+              <MappingFragment StoreEntitySet="OrdenProduccion">
+                <ScalarProperty Name="NumeroOP" ColumnName="NumeroOP" />
+                <ScalarProperty Name="NumeroLinea" ColumnName="NumeroLinea" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdJornadaLaboral" ColumnName="IdJornadaLaboral" />
+                <ScalarProperty Name="SupervisorLinea" ColumnName="SupervisorLinea" />
+                <ScalarProperty Name="SupervisorCalidad" ColumnName="SupervisorCalidad" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registro">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Registro">
+              <MappingFragment StoreEntitySet="Registro">
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+                <ScalarProperty Name="NumeroOP" ColumnName="NumeroOP" />
+                <ScalarProperty Name="IdJornadaLaboral" ColumnName="IdJornadaLaboral" />
+                <ScalarProperty Name="TotalPrimera" ColumnName="TotalPrimera" />
+                <ScalarProperty Name="TotalSegunda" ColumnName="TotalSegunda" />
+                <ScalarProperty Name="TotalHermanado" ColumnName="TotalHermanado" />
+                <ScalarProperty Name="TotalDefectosR" ColumnName="TotalDefectosR" />
+                <ScalarProperty Name="TotalDefectosO" ColumnName="TotalDefectosO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turno">
+            <EntityTypeMapping TypeName="FabricaCalzadosDBModel.Turno">
+              <MappingFragment StoreEntitySet="Turno">
+                <ScalarProperty Name="IdTurno" ColumnName="IdTurno" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

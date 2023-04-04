@@ -1,0 +1,83 @@
+﻿@model CapaPresentacionAdmin.Models.Modelo
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-center" style="margin-top: 50px">Eliminar Modelo</h2>
+
+<h3>Estas seguro que quieres eliminar este modelo?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SKU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SKU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Denominacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Denominacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteInferiorR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteInferiorR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteSuperiorR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteInferiorO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteInferiorO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteSuperiorO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-top: 10px" class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-success" />
+            <a class="btn btn-danger" href="http://localhost:57070/Modelos/index">Volver</a>
+
+        </div>
+    }
+</div>

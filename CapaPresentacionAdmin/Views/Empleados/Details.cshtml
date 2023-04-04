@@ -1,0 +1,77 @@
+﻿@model CapaPresentacionAdmin.Models.Empleado
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="card-header">
+    <i class="fas fa-users me-1"></i>
+    Detalle Empleado
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DNI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNI)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clave)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clave)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoEmpleado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.DNI }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

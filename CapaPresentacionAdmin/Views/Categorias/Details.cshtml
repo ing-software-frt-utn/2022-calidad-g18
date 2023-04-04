@@ -1,0 +1,45 @@
+﻿@model CapaPresentacionAdmin.Models.Categoria
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<br />
+<div class="card-header">
+    <i class="fas fa-table me-1"></i>
+    Detalles Categoria
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdCategoria }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

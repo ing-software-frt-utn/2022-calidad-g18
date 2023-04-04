@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CapaPresentacionAdmin.Models.Categoria>
+
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<br />
+<div class="card-header">
+    <hr />
+    <i class="fas fa-table me-1"></i>
+    Lista de Categorias
+</div>
+<br />
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-success" href="http://localhost:57070/Categorias/Create">Crear Nueva</a>
+    </div>
+</div>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.IdCategoria }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.IdCategoria }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCategoria })
+            </td>
+        </tr>
+    }
+
+</table>

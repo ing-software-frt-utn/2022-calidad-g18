@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CapaPresentacionAdmin.Models.OrdenProduccion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLinea.cshtml";
+}
+
+<h2 class="text-center" style="margin-top: 50px">Ordenes de Produccion</h2>
+
+<p>
+    <div class="row">
+        <hr />
+        <div class="col-12">
+            @if (!ViewBag.TrabajandoActualmente)
+            {
+                <a class="btn btn-success" href="@Url.Action("Create", "OrdenesProduccion")" style="margin-left: 10px;"><i class="fas fa-plus-circle"></i> Crear OP</a>
+            }
+            @*else
+            {
+                <a class="btn btn-success disabled" href="#" style="margin-left: 10px;"><i class="fas fa-plus-circle"></i> Crear OP</a>
+                <span style="color: red; margin-left: 10px;">No puede crear una nueva OP hasta que finalice la que está en curso.</span>
+            }*@
+        </div>
+    </div>
+
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroOP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Linea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Empleado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeroOP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Linea.NumeroLinea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modelo.Denominacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Color.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empleado.DNI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaRegistro)
+        </td>
+
+        <td>
+            @using (Html.BeginForm("Pausar", "OrdenesProduccion", new { Id = item.NumeroOP }, FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-secondary" @if (item.Estado == "Finalizada" || item.Estado == "Pausada") { <text> disabled</text> }>
+                    <i class="fas fa-pause"></i> Pausar
+                </button>
+            }
+            @using (Html.BeginForm("Reanudar", "OrdenesProduccion", new { Id = item.NumeroOP }, FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-primary" @if (item.Estado == "Finalizada" || item.Estado == "Iniciada") { <text> disabled</text> }>
+                    <i class="fas fa-play"></i> Reanudar
+                </button>
+            }
+            @using (Html.BeginForm("Finalizar", "OrdenesProduccion", new { Id = item.NumeroOP }, FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-danger" @if (item.Estado == "Finalizada") { <text> disabled</text> } onclick="return confirm('¿Está seguro de que desea finalizar la orden de producción?')">
+                    <i class="fas fa-stop"></i> Finalizar
+                </button>
+            }
+        </td>
+    </tr>
+    }
+
+</table>

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CapaPresentacionAdmin.Models.Modelo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-center" style="margin-top: 50px">Modelos</h2>
+<br />
+
+<div class="row">
+    <hr />
+    <div class="col-12">
+        <a class="btn btn-success" href="http://localhost:57070/Modelos/Create">Crear Modelo</a>
+    </div>
+</div>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SKU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Denominacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LimiteInferiorR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LimiteInferiorO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LimiteSuperiorO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.SKU)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Denominacion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LimiteInferiorR)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LimiteSuperiorR)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LimiteInferiorO)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LimiteSuperiorO)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FechaRegistro)
+    </td>
+   
+    <td>
+
+        @Html.ActionLink("Editar", "Edit", "Modelos", new { Id = item.IdModelo },
+        new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+        @Html.ActionLink("Detalles", "Details", "Modelos", new { Id = item.IdModelo },
+        new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+        @Html.ActionLink("Eliminar", "Delete", "Modelos", new { Id = item.IdModelo },
+        new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+
+    </td>
+</tr>
+    }
+
+</table>

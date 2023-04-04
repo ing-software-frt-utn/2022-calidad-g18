@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CapaPresentacionAdmin.Models.Empleado>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        
+    }
+
+    <h2 class="text-center" style="margin-top: 50px">Empleados</h2>
+
+
+    <div class="row">
+        <hr />
+        <div class="col-12">
+            <a class="btn btn-success" href="http://localhost:57070/Empleados/Create">Crear nuevo</a>
+        </div>
+    </div>
+    <br />
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DNI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoEmpleado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clave)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+
+
+                @Html.ActionLink("Editar", "Edit", "Empleados", new { Id = item.DNI },
+      new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+                @Html.ActionLink("Detalles", "Details", "Empleados", new { Id = item.DNI },
+                new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+                @Html.ActionLink("Eliminar", "Delete", "Empleados", new { Id = item.DNI },
+                new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+            </td>
+        </tr>
+    }
+
+    </table>

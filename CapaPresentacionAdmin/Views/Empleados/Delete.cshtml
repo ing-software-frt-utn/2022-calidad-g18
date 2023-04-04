@@ -1,0 +1,82 @@
+﻿@model CapaPresentacionAdmin.Models.Empleado
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center" style="margin-top: 50px">Eliminar Empleado</h2>
+
+
+<h3>¿Estas seguro que quieres eliminar este empleado?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DNI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNI)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clave)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clave)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoEmpleado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+<div style="margin-top: 10px" class="form-actions no-color">
+    <input type="submit" value="Eliminar" class="btn btn-success" />
+    <a class="btn btn-danger" href="http://localhost:57070/Empleados/index">Volver</a>
+
+</div>
+    }
+</div>

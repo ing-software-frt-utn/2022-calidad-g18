@@ -1,0 +1,70 @@
+﻿/* Estilo para el contenedor principal */
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+}
+
+/* Estilo para los contenedores internos */
+.section {
+    position: relative;
+    flex: 1;
+    margin-right: 20px;
+}
+
+    .section h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* Estilo para la línea divisoria */
+    .section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -1px;
+        width: 2px;
+        background-color: #ccc;
+    }
+
+/* Estilo para el formulario */
+form {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="date"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 200px;
+}
+
+button[type="submit"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #0066cc;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    button[type="submit"]:hover {
+        background-color: #0052a3;
+    }

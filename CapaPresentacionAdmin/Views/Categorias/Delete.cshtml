@@ -1,0 +1,52 @@
+﻿@model CapaPresentacionAdmin.Models.Categoria
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<br />
+<div class="card-header">
+    <i class="fas fa-table me-1"></i>
+    Baja Categoria
+</div>
+
+<h3>¿Estas seguro que quieres eliminar esta categoria?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+            @Html.ActionLink("Volver", "Index")
+        </div>
+    }
+</div>

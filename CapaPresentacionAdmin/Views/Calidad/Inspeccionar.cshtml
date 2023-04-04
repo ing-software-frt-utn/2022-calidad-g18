@@ -1,0 +1,439 @@
+﻿@model CapaPresentacionAdmin.Models.OrdenProduccion
+
+@{
+    ViewBag.Title = "Inspeccionar";
+    Layout = "~/Views/Shared/_LayoutCalidad.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inspeccion de Calzado</title>
+    <style>
+        .op-label {
+            width: 120px;
+            float: left;
+            font-weight: bold;
+        }
+
+        .op-value {
+            float: left;
+        }
+
+        #horas-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .btn-hora {
+            display: inline-block;
+            width: 100px;
+            margin-right: 25px;
+        }
+
+        .pares-primera-value {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .cantidad-defecto {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" style="text-align: center">
+        <div class="op-container">
+            <br />
+            <h4>Datos de OP</h4>
+            <div class="op-row">
+                <div class="op-label">OP N°:</div>
+                <div class="op-value">@Model.NumeroOP</div>
+            </div>
+            <div class="op-row">
+                <div class="op-label">Línea:</div>
+                <div class="op-value">@Model.NumeroLinea</div>
+            </div>
+            <div class="op-row">
+                <div class="op-label">Modelo:</div>
+                <div class="op-value">@Model.Modelo.Denominacion</div>
+            </div>
+            <div class="op-row">
+                <div class="op-label">Color:</div>
+                <div class="op-value">@Model.Color.Descripcion</div>
+            </div>
+            <div class="op-row">
+                <div class="op-label">Fecha:</div>
+                <div class="op-value">@DateTime.Now.ToString("yyyy-MM-dd")</div>
+            </div>
+            <div class="op-row">
+                <div class="op-label">Turno:</div>
+                <div class="op-value">@Model.JornadaLaboral.Turno.Descripcion</div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <!--Elemento HTML para las horas-->
+
+            <div id="horas-container"></div>
+
+            <hr />
+            <div>
+                Pares de primera:
+                <button id="decrementar" class="btn btn-danger mr-5" style="width: 40px">-</button>
+                <span id="pares-primera" class="pares-primera-value"> 0 </span>
+                <button id="incrementar" class="btn btn-success ml-5">+</button>
+            </div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-6">
+                    <button id="observados" class="btn btn-outline-primary">Defectos Observados</button>
+                </div>
+
+                <div class="col-6">
+                    <button id="reproceso" class="btn btn-outline-primary">Defectos de Reproceso</button>
+                </div>
+            </div>
+            <br />
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="list-group justify-content-center">
+                        <div class="list-group-item list-group-item-action active text-center bg-secondary border-0">Pie Izquierdo</div>
+                        <ul id="defectos-container-izq" class="list-group text-center"></ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="list-group justify-content-center">
+                        <div class="list-group-item list-group-item-action active text-center bg-secondary border-0">Pie Derecho</div>
+                        <ul id="defectos-container-der" class="list-group text-center"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="container" style="text-align: center">
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-danger" onclick="window.location.href='@Url.Action("Index","Calidad")'"><i class="fas fa-times"></i> Cancelar Inspección</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success" id="confirmar-registro"><i class="fas fa-check"></i> Confirmar Registro</button>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @*Traer horas del turno actual*@
+<script>
+        $(document).ready(function () {
+            var HoraActual;
+
+            $.ajax({
+                url: "/Calidad/HorasTurnoActual",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Obtener la hora actual
+                    var ahora = new Date();
+                    HoraActual = ahora.getHours();
+                    // Variable para guardar referencia al botón de la hora actual
+                    var currentButton;
+
+                    $.each(data, function (index, value) {
+                        var horaArray = value.split(":");
+                        var hora = new Date();
+
+                        hora.setHours(parseInt(horaArray[0]));
+                        hora.setMinutes(parseInt(horaArray[1]));
+                        // Se formatea la hora en formato hh:mm
+                        var horaFormateada = ('0' + hora.getHours()).slice(-2) + ':' + ('0' + hora.getMinutes()).slice(-2);
+                        // Se crea un botón con el identificador de hora
+                        var horaButton = $('<button/>').addClass('btn btn-outline-secondary btn-hora').text(horaFormateada).attr('id', hora.getHours());
+
+                        // Deshabilitar los botones correspondientes a horas pasadas en relación a la hora actual
+                        //if (hora.getHours() > HoraActual) {
+                        //    horaButton.prop('disabled', true);
+                        //}
+
+                        horaButton.click(function (e) {
+                            localStorage.setItem("horas", e.target.id);
+                            //console.log(e.target.id);
+                            //console.log(e);
+                            console.log(localStorage.getItem("horas"));
+                            actualizarParesPrimera();
+                            filtrarDefectos(tipoDefecto);
+
+                            // Remover la clase active del botón actual
+                            if (currentButton) {
+                                currentButton.removeClass('active');
+                            }
+
+                            // Asignar el botón actual a la variable
+                            currentButton = $(this);
+
+                            // Agregar la clase active al botón actual
+                            currentButton.addClass('active');
+                        });
+
+                        $('#horas-container').append(horaButton);
+
+                        // Activar el botón de la hora actual
+                        if (hora.getHours() == HoraActual) {
+                            // Asignar el botón actual a la variable
+                            currentButton = horaButton;
+
+                            horaButton.addClass('active');
+
+                            // Presionar automáticamente el botón actual
+                            currentButton.click();
+                        }
+                    });
+
+                    // Recorrer todos los botones de hora y asignar un controlador de eventos a cada uno
+                    for (var i = 1; i <= 24; i++) {
+                        // Construir el selector del botón
+                        var selector = '#hora-' + i;
+
+                        // Obtener el botón actual
+                        var horaButton = $(selector);
+
+                        // Asignar el controlador de eventos
+                        horaButton.on('click', function () {
+                            // Remover la clase active de todos los botones
+                            $('.btn-hora').removeClass('active');
+
+                            // Asignar el botón actual a la variable
+                            currentButton = $(this);
+
+                            // Agregar la clase active al botón actual
+                            currentButton.addClass('active');
+
+                            // Obtener la horaId a partir del ID del botón
+                            var horaId = currentButton.attr('id').split('-')[1];
+
+                            localStorage.removeItem("pares-primera");
+                            localStorage.removeItem(defecto.descripcion + "-" + pie);
+                        });
+                    }
+                },
+
+                error: function (xhr, status, error) {
+                    console.log("Error al obtener las horas de turno: " + error);
+                }
+            });
+        @*});
+    </script>*@
+
+    @*Manejar datos de inspeccion*@
+    //<!--<script>
+    //    $(document).ready(function () {-->
+
+            // Función para actualizar la hora seleccionada que esta guardada en la memoria cache
+            function getHora() {
+                return localStorage.getItem("horas");
+            }
+
+            var paresPrimeraElement = $('#pares-primera');
+
+            function actualizarParesPrimera() {
+
+                // Obtener la hora seleccionada
+                var horaSeleccionada = getHora();
+
+                // Obtener los pares de primera guardados para la hora seleccionada
+                var paresPrimera = parseInt(localStorage.getItem("pares-primera-" + horaSeleccionada)) || 0;
+
+                // Actualizar el valor de paresPrimeraElement
+                paresPrimeraElement.text(paresPrimera);
+
+                // Guardar la cantidad de pares de primera en la memoria caché para la hora seleccionada
+                localStorage.setItem("pares-primera-" + horaSeleccionada, paresPrimera);
+            }
+
+            // Función para decrementar el número de pares de primera
+            function decrementarParesPrimera() {
+
+                // Obtener la hora seleccionada
+                var horaSeleccionada = getHora();
+
+                // Obtener los pares de primera guardados para la hora seleccionada
+                var paresPrimera = parseInt(localStorage.getItem("pares-primera-" + horaSeleccionada)) || 0;
+
+                if (paresPrimera > 0) {
+                    paresPrimera--;
+                    // Guardar la cantidad de pares de primera actualizada en la memoria caché
+                    localStorage.setItem("pares-primera-" + horaSeleccionada, paresPrimera);
+                }
+
+                // Actualizar el valor de paresPrimeraElement
+                paresPrimeraElement.text(paresPrimera);
+            }
+
+            // Función para incrementar el número de pares de primera
+            function incrementarParesPrimera() {
+
+                // Obtener la hora seleccionada
+                var horaSeleccionada = getHora();
+
+                // Obtener los pares de primera guardados para la hora seleccionada
+                var paresPrimera = parseInt(localStorage.getItem("pares-primera-" + horaSeleccionada)) || 0;
+
+                paresPrimera++;
+                // Guardar la cantidad de pares de primera actualizada en la memoria caché
+                localStorage.setItem("pares-primera-" + horaSeleccionada, paresPrimera);
+
+                // Actualizar el valor de paresPrimeraElement
+                paresPrimeraElement.text(paresPrimera);
+            }
+
+            // Asignar eventos a los botones
+            $('#decrementar').click(decrementarParesPrimera);
+            $('#incrementar').click(incrementarParesPrimera);
+
+            // Mostrar la cantidad de pares de primera guardada en la memoria cache al cargar la página
+            actualizarParesPrimera();
+
+            // Función para crear un elemento de defecto con botones para manipular la cantidad
+            function crearElementoDefecto(defecto, pie, hora) {
+
+                // Crear un elemento de lista
+                var defectoElement = $("<li>").addClass("list-group-item");
+                // Crear un elemento de texto con el nombre del defecto
+                var nombreDefectoElement = $("<span>").text(defecto.descripcion);
+                // Crear un elemento de texto con la cantidad de defectos
+                var cantidadDefectoElement = $("<span>").addClass("cantidad-defecto").text("0");
+
+                // Verificar si ya hay una cantidad guardada en la memoria cache para este defecto y pie
+                var cantidadGuardada = localStorage.getItem(hora + "-" + defecto.descripcion + "-" + pie );
+
+                if (cantidadGuardada !== null) {
+                    cantidadDefectoElement.text(cantidadGuardada);
+                }
+
+                //crear botones para incrementar y decrementar
+                var decrementarBtn = $("<button>").addClass("btn btn-sm btn-danger").text("-");
+                var incrementarBtn = $("<button>").addClass("btn btn-sm btn-success").text("+");
+
+                // Función para decrementar el número de un defecto
+                decrementarBtn.click(function () {
+                    var cantidad = parseInt(cantidadDefectoElement.text());
+                    if (cantidad > 0) {
+                        cantidad--;
+                        cantidadDefectoElement.text(cantidad);
+                        // Guardar la nueva cantidad en la memoria cache
+                        localStorage.setItem(hora + "-" + defecto.descripcion + "-" + pie, cantidad);
+                    }
+                });
+
+                // Función para incrementar el número de un defecto
+                incrementarBtn.click(function () {
+                    var cantidad = parseInt(cantidadDefectoElement.text());
+                    cantidad++;
+                    cantidadDefectoElement.text(cantidad);
+                    // Guardar la nueva cantidad en la memoria cache
+                    localStorage.setItem(hora + "-" + defecto.descripcion + "-" + pie, cantidad);
+                });
+
+                //Aspecto para los defectos
+                defectoElement.append(nombreDefectoElement);
+                defectoElement.append(": ");
+                defectoElement.append(decrementarBtn);
+                defectoElement.append(" ");
+                defectoElement.append(cantidadDefectoElement);
+                defectoElement.append(" ");
+                defectoElement.append(incrementarBtn);
+
+                return defectoElement;
+            }
+
+            // Función para hacer la petición POST y actualizar los contenedores de los pies
+            function filtrarDefectos(tipo) {
+
+                var hora = getHora();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Calidad/ObtenerDefectos",
+                    data: { tipo: tipo },
+                    success: function (response) {
+                        // Convertimos la lista de cadenas en una lista de elementos HTML
+                        var itemsIzq = response.map(function (descripcion) {
+                            var defecto = { descripcion: descripcion };
+                            return crearElementoDefecto(defecto, "izq", hora);
+                        });
+                        var itemsDer = response.map(function (descripcion) {
+                            var defecto = { descripcion: descripcion };
+                            return crearElementoDefecto(defecto, "der", hora);
+                        });
+
+                        // Actualizamos el contenido de los contenedores de defectos con los elementos HTML
+                        $("#defectos-container-izq").empty().append(itemsIzq);
+                        $("#defectos-container-der").empty().append(itemsDer);
+                    },
+                    error: function () {
+                        alert("Ocurrió un error al filtrar los defectos");
+                    }
+                });
+            }
+
+            var tipoDefecto;
+
+            $("#observados").click(function () {
+                tipoDefecto = "Observado";
+
+                // Agregar la clase active al botón de observados y quitarla del botón de reproceso
+                $("#observados").addClass("active");
+                $("#reproceso").removeClass("active");
+
+                filtrarDefectos(tipoDefecto);
+            });
+
+            $("#reproceso").click(function () {
+                tipoDefecto = "Reproceso";
+
+                // Agregar la clase active al botón de reproceso y quitarla del botón de observados
+                $("#reproceso").addClass("active");
+                $("#observados").removeClass("active");
+
+                filtrarDefectos(tipoDefecto);
+            });
+
+            $.ajax({
+                url: '@Url.Action("Inspeccionar", "Controlador")',
+                type: 'POST',
+                data: {
+                    hora: horaSeleccionada,
+                    totalPrimera: paresPrimera,
+                    defectos: defectosSeleccionados
+                },
+                success: function (result) {
+                    // código para manejar la respuesta del servidor
+                },
+                error: function (xhr, status, error) {
+                    // código para manejar el error en la solicitud
+                }
+            });
+
+
+        });
+</script>
+}

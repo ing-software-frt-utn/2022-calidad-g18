@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCalidad.cshtml";
+}
+
+<h2 class="text-center" style="margin-top: 50px">Asociar OP</h2>
+<hr />
+
+@using (Html.BeginForm("AsociarOP", "Calidad", FormMethod.Post))
+{
+    <div style="margin-top: 10px" class="text-center">
+        <div>
+            <style>
+                select option {
+                    background-color: whitesmoke;
+                    color: black;
+                }
+            </style>
+            <select name="numeroOp" style="border: 1px solid #008000; background-color: #18B96D; color: #fff; font-size: 16px; padding: 10px; margin-bottom: 10px; height: 45px; ">
+                <option value="" disabled selected>Seleccione una Op</option>
+                @foreach (var op in ViewBag.OrdenesProduccion)
+                {
+                <option value="@op.NumeroOP" style="padding: 5px;">@op.NumeroOP</option>
+                }
+            </select>
+        </div>
+  
+        <button type="submit" class="btn btn-outline-success btn-lg btn-blocks">Asociar</button>
+   
+    </div>
+}
+
